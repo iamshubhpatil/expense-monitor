@@ -163,7 +163,7 @@ const handleSubmit = async () => {
   } catch (error) {
     // Handle specific error types
     if (error.message?.includes('rate limit') || error.message?.includes('429') || error.status === 429) {
-      errorMessage.value = 'Too many reset requests. Please wait 10 minutes before trying again.'
+      errorMessage.value = 'Please try in 60 min'
       isRateLimited.value = true
       startRetryCountdown()
     } else if (error.message?.includes('Invalid email')) {
@@ -179,7 +179,7 @@ const handleSubmit = async () => {
 }
 
 const startRetryCountdown = () => {
-  retryCountdown.value = 600 // 10 minutes in seconds
+  retryCountdown.value = 3600 // 60 minutes in seconds
   countdownInterval = setInterval(() => {
     retryCountdown.value--
     if (retryCountdown.value <= 0) {

@@ -149,13 +149,13 @@
             <!-- Sign Up Button -->
             <button
               type="submit"
-              :disabled="loading"
+              :disabled="loading || isRateLimited"
               class="w-full bg-gradient-to-r from-lavender-600 to-purple-600 hover:from-lavender-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-3 rounded-xl transition-all duration-200 transform hover:scale-105 disabled:hover:scale-100 shadow-lg hover:shadow-xl flex items-center justify-center gap-2 mt-6"
             >
-              <svg v-if="!loading" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg v-if="!loading && !isRateLimited" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
               </svg>
-              {{ loading ? 'Creating account...' : 'Create Account' }}
+              {{ loading ? 'Creating account...' : isRateLimited ? `Wait ${formatCountdown(retryCountdown)}` : 'Create Account' }}
             </button>
           </form>
 
@@ -231,7 +231,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
@@ -242,6 +242,9 @@ const loading = ref(false)
 const errorMessage = ref('')
 const emailSent = ref(false)
 const sentEmail = ref('')
+const isRateLimited = ref(false)
+const retryCountdown = ref(0)
+let countdownInterval = null
 const formData = ref({
   email: '',
   password: '',
@@ -298,14 +301,51 @@ const handleSubmit = async () => {
       formData.value.password = ''
       formData.value.confirmPassword = ''
     } else {
-      errorMessage.value = authStore.error
+      // Check for rate limiting errors
+      if (authStore.error?.includes('rate limit') || authStore.error?.includes('429') || authStore.error?.includes('email rate limit exceeded')) {
+        errorMessage.value = 'Please try in 60 min'
+        isRateLimited.value = true
+        startRetryCountdown()
+      } else {
+        errorMessage.value = authStore.error
+      }
     }
   } catch (error) {
-    errorMessage.value = error.message || 'Signup failed. Please try again.'
+    // Check for rate limiting errors in the caught error as well
+    if (error.message?.includes('rate limit') || error.message?.includes('429') || error.message?.includes('email rate limit exceeded')) {
+      errorMessage.value = 'Please try in 60 min'
+      isRateLimited.value = true
+      startRetryCountdown()
+    } else {
+      errorMessage.value = error.message || 'Signup failed. Please try again.'
+    }
   } finally {
     loading.value = false
   }
 }
 
-</script>
+const startRetryCountdown = () => {
+  retryCountdown.value = 3600 // 60 minutes in seconds
+  countdownInterval = setInterval(() => {
+    retryCountdown.value--
+    if (retryCountdown.value <= 0) {
+      isRateLimited.value = false
+      clearInterval(countdownInterval)
+      countdownInterval = null
+    }
+  }, 1000)
+}
 
+const formatCountdown = (seconds) => {
+  const hours = Math.floor(seconds / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+  const secs = seconds % 60
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
+}
+
+onUnmounted(() => {
+  if (countdownInterval) {
+    clearInterval(countdownInterval)
+  }
+})
+</script>

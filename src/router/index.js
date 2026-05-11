@@ -134,6 +134,12 @@ router.beforeEach(async (to, from, next) => {
   // Redirect authenticated users away from Landing, Login, Signup
   if (authStore.isAuthenticated) {
     if (to.name === 'Landing' || to.name === 'Login' || to.name === 'Signup') {
+      // Check if user is active
+      if (authStore.user && authStore.user.is_active === false) {
+        await authStore.logout()
+        next('/login')
+        return
+      }
       next('/dashboard')
       return
     }
@@ -141,6 +147,13 @@ router.beforeEach(async (to, from, next) => {
 
   // Redirect to login if trying to access protected route while not authenticated
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    next('/login')
+    return
+  }
+
+  // Check if authenticated user is active for protected routes
+  if (to.meta.requiresAuth && authStore.isAuthenticated && authStore.user && authStore.user.is_active === false) {
+    await authStore.logout()
     next('/login')
     return
   }

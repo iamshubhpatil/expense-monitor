@@ -73,6 +73,13 @@ export const useAuthStore = defineStore('auth', () => {
       user.value = data.user
       isAuthenticated.value = true
       await fetchUserProfile()
+      if (user.value && user.value.is_active === false) {
+        error.value = 'Your account is inactive. Please contact admin at expensetrack1@gmail.com for activation.'
+        await supabase.auth.signOut()
+        user.value = null
+        isAuthenticated.value = false
+        return { success: false }
+      }
       successMessage.value = 'Login successful'
       return { success: true }
     } catch (err) {

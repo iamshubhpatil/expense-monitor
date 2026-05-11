@@ -15,6 +15,7 @@
     "date-fns": "^2.30.0",
     "dotenv": "^17.4.2",
     "papaparse": "^5.4.1",
+    "pg": "^8.20.0",
     "pinia": "^2.1.4",
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.11.0",

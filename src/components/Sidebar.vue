@@ -84,7 +84,7 @@
         <span>Settings</span>
       </router-link>
       <router-link
-        v-if="authStore.userRole === 'admin'"
+        v-if="authStore.user?.role === 'admin'"
         to="/admin"
         class="flex items-center space-x-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-lavender-50 dark:hover:bg-gray-800 hover:text-lavender-600 dark:hover:text-lavender-400 rounded-lg transition"
         active-class="bg-lavender-100 dark:bg-gray-700 text-lavender-600 dark:text-lavender-400"

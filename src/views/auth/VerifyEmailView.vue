@@ -22,23 +22,53 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { supabase } from '@/lib/supabase'
+import { useAuthStore } from '@/stores/auth'
 
 const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
 const loading = ref(true)
 const success = ref(false)
 const message = ref('')
 
-onMounted(() => {
-  loading.value = false
-  const token = route.query.token
-  if (token) {
+const handleVerification = async () => {
+  try {
+    const url = new URL(window.location.href)
+
+    const hasRedirectSession = url.searchParams.has('access_token') || url.searchParams.has('type')
+    if (hasRedirectSession) {
+      const { data, error } = await supabase.auth.getSessionFromUrl()
+      if (error) {
+        console.warn('Failed to parse session from URL:', error)
+      }
+
+      await authStore.initializeAuth()
+
+      if (authStore.isAuthenticated) {
+        success.value = true
+        message.value = 'Your email has been verified and your account is ready. Redirecting to dashboard...'
+        setTimeout(() => {
+          router.push('/dashboard')
+        }, 2200)
+        return
+      }
+    }
+
     success.value = true
-    message.value = 'Your email has been verified successfully. You can now sign in.'
-  } else {
-    success.value = true
-    message.value = 'If you were redirected here from your email, your account verification was completed.'
+    message.value = 'Your email has been verified successfully. Please sign in to continue.'
+  } catch (error) {
+    console.error('Email verification error:', error)
+    success.value = false
+    message.value = 'Could not complete verification automatically. Please sign in to continue.'
+  } finally {
+    loading.value = false
   }
+}
+
+onMounted(() => {
+  handleVerification()
 })
 </script>
 

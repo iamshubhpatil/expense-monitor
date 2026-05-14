@@ -236,58 +236,40 @@
           <p class="text-sm text-gray-500 mt-2">💡 Tip: Replace video IDs in the component code with your YouTube video IDs</p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8">
-          <!-- Video 1 - Getting Started -->
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Video 1 - Login and Configure Settings and Profile -->
           <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition">
             <div class="relative w-full h-64 bg-black">
               <iframe
                 class="w-full h-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="Getting Started"
+                src="https://www.youtube.com/embed/tOXFxtl0P7I"
+                title="Login and Configure Settings and Profile in app"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
               </iframe>
             </div>
             <div class="p-4">
-              <h3 class="text-xl font-bold">Getting Started</h3>
-              <p class="text-gray-600 dark:text-gray-400 mt-2">Learn how to set up your account and add your first expenses.</p>
+              <h3 class="text-xl font-bold">Login and Configure Settings and Profile</h3>
+              <p class="text-gray-600 dark:text-gray-400 mt-2">Learn how to log in, configure your settings, and set up your profile in the app.</p>
             </div>
           </div>
 
-          <!-- Video 2 - Analytics & Reports -->
+          <!-- Video 2 - How to add Income, Expenses and Transfer transactions -->
           <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition">
             <div class="relative w-full h-64 bg-black">
               <iframe
                 class="w-full h-full"
-                src="httpsjNQXAC9IVRw://www.youtube.com/embed/"
-                title="Analytics & Reports"
+                src="https://www.youtube.com/embed/l7KipkaRHz8"
+                title="How to add Income, Expenses and Transfer transactions"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
               </iframe>
             </div>
             <div class="p-4">
-              <h3 class="text-xl font-bold">Analytics & Reports</h3>
-              <p class="text-gray-600 dark:text-gray-400 mt-2">Understand your spending with powerful analytics tools.</p>
-            </div>
-          </div>
-
-          <!-- Video 3 - Advanced Features -->
-          <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition">
-            <div class="relative w-full h-64 bg-black">
-              <iframe
-                class="w-full h-full"
-                src="https://www.youtube.com/embed/9bZkp7q19f0"
-                title="Advanced Features"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
-              </iframe>
-            </div>
-            <div class="p-4">
-              <h3 class="text-xl font-bold">Advanced Features</h3>
-              <p class="text-gray-600 dark:text-gray-400 mt-2">Explore budget management, transfers, and more.</p>
+              <h3 class="text-xl font-bold">How to add Income, Expenses and Transfer transactions</h3>
+              <p class="text-gray-600 dark:text-gray-400 mt-2">Step-by-step guide on adding income, tracking expenses, and managing transfer transactions.</p>
             </div>
           </div>
         </div>

@@ -55,11 +55,11 @@
             <!-- Stats -->
             <div class="grid grid-cols-3 gap-6 pt-12">
               <div>
-                <p class="text-3xl font-bold text-lavender-600">10K+</p>
+                <p class="text-3xl font-bold text-lavender-600">100+</p>
                 <p class="text-gray-600 dark:text-gray-400">Active Users</p>
               </div>
               <div>
-                <p class="text-3xl font-bold text-lavender-600">$100M+</p>
+                <p class="text-3xl font-bold text-lavender-600">$100K+</p>
                 <p class="text-gray-600 dark:text-gray-400">Tracked</p>
               </div>
               <div>
@@ -69,15 +69,23 @@
             </div>
           </div>
 
-          <!-- Right Visual -->
+          <!-- Right Visual - Carousel with Page Flip -->
           <div class="relative">
             <div class="absolute inset-0 bg-gradient-to-r from-lavender-400 to-purple-400 rounded-2xl blur-3xl opacity-30"></div>
-            <div class="relative bg-gradient-to-br from-lavender-100 to-purple-100 dark:from-gray-700 dark:to-gray-600 rounded-2xl p-8 h-96 flex items-center justify-center">
-              <div class="text-center">
-                <svg class="w-24 h-24 mx-auto text-lavender-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <p class="text-gray-600 dark:text-gray-300 font-semibold">Smart Expense Management</p>
+            <div class="relative bg-gradient-to-br from-lavender-100 to-purple-100 dark:from-gray-700 dark:to-gray-600 rounded-2xl p-8 h-96 flex items-center justify-center overflow-hidden">
+              <!-- Carousel Container - Auto-rotating with Page Flip -->
+              <div class="relative w-full h-full flex items-center justify-center">
+                <!-- Images with Page Flip Animation -->
+                <div v-for="(image, index) in carouselImages" :key="index" class="absolute inset-0 flex items-center justify-center p-8"
+                  :class="{
+                    'page-flip-enter': index === currentImageIndex,
+                    'page-flip-exit': index === (currentImageIndex - 1 + carouselImages.length) % carouselImages.length && currentImageIndex !== 0
+                  }">
+                    <div class="text-center" v-if="index === currentImageIndex">
+                    <img :src="image" :alt="`Carousel image ${index + 1}`" class="mx-auto w-72 h-auto rounded-2xl shadow-lg" />
+                    <p class="text-gray-600 dark:text-gray-300 font-semibold mt-4">Smart Expense Management</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -163,77 +171,12 @@
       </div>
     </section>
 
-    <!-- Screenshots Section -->
-    <section class="py-20 px-4 bg-gray-50 dark:bg-gray-800">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl font-bold mb-4">Screenshots</h2>
-          <p class="text-xl text-gray-600 dark:text-gray-400">Beautiful interface designed for simplicity and power</p>
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Screenshot 1 -->
-          <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-            <div class="bg-gradient-to-r from-lavender-600 to-purple-600 h-48 flex items-center justify-center">
-              <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-              </svg>
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">Dashboard Overview</h3>
-              <p class="text-gray-600 dark:text-gray-300">Track all your finances at a glance with our comprehensive dashboard.</p>
-            </div>
-          </div>
-
-          <!-- Screenshot 2 -->
-          <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-            <div class="bg-gradient-to-r from-lavender-600 to-purple-600 h-48 flex items-center justify-center">
-              <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-              </svg>
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">Expense Tracking</h3>
-              <p class="text-gray-600 dark:text-gray-300">Log expenses with ease and categorize them automatically.</p>
-            </div>
-          </div>
-
-          <!-- Screenshot 3 -->
-          <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-            <div class="bg-gradient-to-r from-lavender-600 to-purple-600 h-48 flex items-center justify-center">
-              <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
-              </svg>
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">Detailed Reports</h3>
-              <p class="text-gray-600 dark:text-gray-300">Generate comprehensive reports and analyze your spending patterns.</p>
-            </div>
-          </div>
-
-          <!-- Screenshot 4 -->
-          <div class="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition">
-            <div class="bg-gradient-to-r from-lavender-600 to-purple-600 h-48 flex items-center justify-center">
-              <svg class="w-20 h-20 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-              </svg>
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold mb-2">Budget Management</h3>
-              <p class="text-gray-600 dark:text-gray-300">Set budgets and get alerts when you're near your limits.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Videos Section -->
-    <section id="videos" class="py-20 px-4">
+    <section id="videos" class="py-20 px-4 bg-gray-50 dark:bg-gray-800">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
           <h2 class="text-4xl font-bold mb-4">Watch How It Works</h2>
           <p class="text-xl text-gray-600 dark:text-gray-400">See our features in action</p>
-          <p class="text-sm text-gray-500 mt-2">💡 Tip: Replace video IDs in the component code with your YouTube video IDs</p>
         </div>
 
         <div class="grid md:grid-cols-2 gap-8">
@@ -272,9 +215,45 @@
               <p class="text-gray-600 dark:text-gray-400 mt-2">Step-by-step guide on adding income, tracking expenses, and managing transfer transactions.</p>
             </div>
           </div>
+
+          <!-- Video 3 - Budget Feature -->
+          <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition">
+            <div class="relative w-full h-64 bg-black">
+              <iframe
+                class="w-full h-full"
+                src="https://www.youtube.com/embed/QL9-t6V_GbM"
+                title="Budget Feature"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="p-4">
+              <h3 class="text-xl font-bold">Budget Feature</h3>
+              <p class="text-gray-600 dark:text-gray-400 mt-2">Overview of setting and managing budgets within the app.</p>
+            </div>
+          </div>
+
+          <!-- Video 4 - Reports and Analytics (placeholder) -->
+          <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition">
+            <div class="relative w-full h-64 bg-black">
+              <iframe
+                class="w-full h-full"
+                src="https://www.youtube.com/embed/9bZkp7q19f0"
+                title="Reports and Analytics"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="p-4">
+              <h3 class="text-xl font-bold">Reports and Analytics</h3>
+              <p class="text-gray-600 dark:text-gray-400 mt-2">Explore reports and analytics — placeholder video until you upload the final one.</p>
+            </div>
+          </div>
         </div>
 
-        <!-- Documentation Section -->
+        <!-- Documentation Section (moved here) -->
         <div class="mt-20">
           <div class="text-center mb-12">
             <h3 class="text-3xl font-bold mb-4">Documentation & Resources</h3>
@@ -318,6 +297,8 @@
       </div>
     </section>
 
+    
+
     <!-- Contact Section -->
     <section id="contact" class="py-20 px-4 bg-gradient-to-r from-lavender-600 to-purple-600">
       <div class="max-w-4xl mx-auto">
@@ -360,7 +341,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
             </svg>
             <p class="font-semibold">Email</p>
-            <p class="opacity-90">support@expensetracker.com</p>
+            <p class="opacity-90">expensetrack1@gmail.com</p>
           </div>
 
           <div class="text-center text-white">
@@ -368,7 +349,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
             </svg>
             <p class="font-semibold">Phone</p>
-            <p class="opacity-90">+1 (555) 123-4567</p>
+            <p class="opacity-90">+91 9834690475</p>
           </div>
 
           <div class="text-center text-white">
@@ -377,7 +358,7 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
             <p class="font-semibold">Address</p>
-            <p class="opacity-90">San Francisco, CA</p>
+            <p class="opacity-90">Maharashtra, India</p>
           </div>
         </div>
       </div>
@@ -497,11 +478,72 @@
 </template>
 
 <script setup>
-// Landing page doesn't need much logic, but we can add smooth scrolling
+import { ref, onMounted, onUnmounted } from 'vue'
+
+
+const carouselImages = [
+  '/images/ChatGPT Image May 17, 2026 at 12_39_43 PM.png',
+  '/images/ChatGPT Image May 17, 2026 at 12_41_12 PM.png',
+  '/images/ChatGPT Image May 17, 2026 at 12_42_14 PM.png',
+]
+
+const currentImageIndex = ref(0)
+let autoRotateInterval
+
+const startAutoRotate = () => {
+  autoRotateInterval = setInterval(() => {
+    currentImageIndex.value = (currentImageIndex.value + 1) % carouselImages.length
+  }, 3000)
+}
+
+onMounted(() => {
+  startAutoRotate()
+})
+
+onUnmounted(() => {
+  clearInterval(autoRotateInterval)
+})
+
 </script>
 
 <style scoped>
 html {
   scroll-behavior: smooth;
+}
+
+.page-flip-enter {
+  animation: pageFlipEnter 0.6s ease-in-out forwards;
+}
+
+.page-flip-exit {
+  animation: pageFlipExit 0.6s ease-in-out forwards;
+}
+
+@keyframes pageFlipEnter {
+  0% {
+    opacity: 0;
+    transform: rotateY(-90deg) perspective(1200px);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg) perspective(1200px);
+  }
+}
+
+@keyframes pageFlipExit {
+  0% {
+    opacity: 1;
+    transform: rotateY(0deg) perspective(1200px);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: rotateY(90deg) perspective(1200px);
+  }
 }
 </style>

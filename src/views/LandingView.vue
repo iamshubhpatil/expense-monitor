@@ -82,7 +82,7 @@
                     'page-flip-exit': index === (currentImageIndex - 1 + carouselImages.length) % carouselImages.length && currentImageIndex !== 0
                   }">
                     <div class="text-center" v-if="index === currentImageIndex">
-                    <img :src="image.split('/').map(seg => encodeURIComponent(seg)).join('/')" :alt="`Carousel image ${index + 1}`" class="mx-auto w-72 h-auto rounded-2xl shadow-lg" />
+                    <img :src="image" :alt="`Carousel image ${index + 1}`" class="mx-auto w-72 h-auto rounded-2xl shadow-lg" />
                     <p class="text-gray-600 dark:text-gray-300 font-semibold mt-4">Smart Expense Management</p>
                   </div>
                 </div>
@@ -479,12 +479,14 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-
+import chatgpt1 from '../assets/images/chatgpt-1.png'
+import chatgpt2 from '../assets/images/chatgpt-2.png'
+import chatgpt3 from '../assets/images/chatgpt-3.png'
 
 const carouselImages = [
-  '/images/ChatGPT Image May 17, 2026 at 12_39_43 PM.png',
-  '/images/ChatGPT Image May 17, 2026 at 12_41_12 PM.png',
-  '/images/ChatGPT Image May 17, 2026 at 12_42_14 PM.png',
+  chatgpt1,
+  chatgpt2,
+  chatgpt3,
 ]
 
 const currentImageIndex = ref(0)

@@ -82,7 +82,7 @@
                     'page-flip-exit': index === (currentImageIndex - 1 + carouselImages.length) % carouselImages.length && currentImageIndex !== 0
                   }">
                     <div class="text-center" v-if="index === currentImageIndex">
-                    <img :src="encodeURI(image)" :alt="`Carousel image ${index + 1}`" class="mx-auto w-72 h-auto rounded-2xl shadow-lg" />
+                    <img :src="image.split('/').map(seg => encodeURIComponent(seg)).join('/')" :alt="`Carousel image ${index + 1}`" class="mx-auto w-72 h-auto rounded-2xl shadow-lg" />
                     <p class="text-gray-600 dark:text-gray-300 font-semibold mt-4">Smart Expense Management</p>
                   </div>
                 </div>

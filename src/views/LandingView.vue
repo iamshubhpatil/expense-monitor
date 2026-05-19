@@ -74,17 +74,16 @@
             <div class="absolute inset-0 bg-gradient-to-r from-lavender-400 to-purple-400 rounded-2xl blur-3xl opacity-30"></div>
             <div class="relative bg-gradient-to-br from-lavender-100 to-purple-100 dark:from-gray-700 dark:to-gray-600 rounded-2xl p-8 h-96 flex items-center justify-center overflow-hidden">
               <!-- Carousel Container - Auto-rotating with Page Flip -->
-              <div class="relative w-full h-full flex items-center justify-center">
-                <!-- Images with Page Flip Animation -->
-                <div v-for="(image, index) in carouselImages" :key="index" class="absolute inset-0 flex items-center justify-center p-8"
-                  :class="{
-                    'page-flip-enter': index === currentImageIndex,
-                    'page-flip-exit': index === (currentImageIndex - 1 + carouselImages.length) % carouselImages.length && currentImageIndex !== 0
-                  }">
-                    <div class="text-center" v-if="index === currentImageIndex">
-                    <img :src="image" :alt="`Carousel image ${index + 1}`" class="mx-auto w-72 h-auto rounded-2xl shadow-lg" />
-                    <p class="text-gray-600 dark:text-gray-300 font-semibold mt-4">Smart Expense Management</p>
+              <div class="relative w-full h-full flex flex-col items-center justify-center p-8">
+                <transition name="page-flip" mode="out-in">
+                  <div :key="currentImageIndex" class="flex items-center justify-center w-full">
+                    <div class="relative bg-lavender-100/80 dark:bg-gray-700/80 rounded-3xl p-4 shadow-lg">
+                      <img :src="carouselImages[currentImageIndex]" :alt="`Carousel image ${currentImageIndex + 1}`" class="mx-auto w-72 h-auto rounded-2xl" />
+                    </div>
                   </div>
+                </transition>
+                <div class="mt-6 text-center">
+                  <p class="text-gray-600 dark:text-gray-300 font-semibold">Smart Expense Management</p>
                 </div>
               </div>
             </div>
@@ -412,7 +411,7 @@
 
         <div class="text-center mt-12">
           <p class="text-gray-600 dark:text-gray-400 mb-6">Still have questions?</p>
-          <a href="mailto:support@expensetracker.com" class="inline-block bg-lavender-600 text-white px-8 py-3 rounded-lg hover:bg-lavender-700 transition font-semibold">
+          <a href="mailto:expensetrack1@gmail.com" class="inline-block bg-lavender-600 text-white px-8 py-3 rounded-lg hover:bg-lavender-700 transition font-semibold">
             Contact Support
           </a>
         </div>
@@ -482,11 +481,15 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import chatgpt1 from '../assets/images/chatgpt-1.png'
 import chatgpt2 from '../assets/images/chatgpt-2.png'
 import chatgpt3 from '../assets/images/chatgpt-3.png'
+import chatgpt4 from '../assets/images/chatgpt-4.png'
+import chatgpt5 from '../assets/images/chatgpt-5.png'
 
 const carouselImages = [
   chatgpt1,
   chatgpt2,
   chatgpt3,
+  chatgpt4,
+  chatgpt5,
 ]
 
 const currentImageIndex = ref(0)
@@ -513,21 +516,18 @@ html {
   scroll-behavior: smooth;
 }
 
-.page-flip-enter {
-  animation: pageFlipEnter 0.6s ease-in-out forwards;
+.page-flip-enter-active {
+  animation: pageFlipEnter 0.6s ease-in-out both;
 }
 
-.page-flip-exit {
-  animation: pageFlipExit 0.6s ease-in-out forwards;
+.page-flip-leave-active {
+  animation: pageFlipExit 0.6s ease-in-out both;
 }
 
 @keyframes pageFlipEnter {
   0% {
     opacity: 0;
     transform: rotateY(-90deg) perspective(1200px);
-  }
-  50% {
-    opacity: 0.5;
   }
   100% {
     opacity: 1;
@@ -539,9 +539,6 @@ html {
   0% {
     opacity: 1;
     transform: rotateY(0deg) perspective(1200px);
-  }
-  50% {
-    opacity: 0.5;
   }
   100% {
     opacity: 0;
